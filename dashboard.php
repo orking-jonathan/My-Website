@@ -45,7 +45,7 @@ if (!isset($_SESSION['username'])) {
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>Welcome, SKR-CTF{<?= md5($_SESSION['username'] + $_SESSION['password']) ?>}!</h1>
+        <h1>Welcome, SKR-CTF{<?= md5($_SESSION['username'] . $_SESSION['password']) ?>}!</h1>
         <a href="logout.php">Logout</a>
     </div>
 </body>
