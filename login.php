@@ -12,14 +12,22 @@ if (isset($_GET["error"])) {
     exit;
 }
 
-$valid_username = "11000001111110000000111011011101111010100111011111110000000000000000000000000000000000000000000000000000000000000000000000000000";
-$valid_password = "985018416362389919299449526314851988813397306789";
+$valid_username = "c1f80eddea77f14650a2062dda3eb15c";
+$valid_password = "ac89c0dfb98a13243f76eb201ac9c6e2a58f2da5";
+$valid_sum = "52c88134b03495e4488a45c5c2cc06e3f729f366f9debfd8f962e276f2e3ab99";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (base_convert(md5($username), 16, 2) === $valid_username && base_convert(sha1($password), 16, 10) === $valid_password) {
+    if (gettype($username) !== "string" || gettype($password) !== "string") {
+        header("Location: login.php?error=1");
+        exit();
+    }
+
+    if (strcmp(md5($username), $valid_username) === 0 &&
+    strcmp(sha1($password), $valid_password) === 0 &&
+    strcmp(hash('sha256', $username . $password), $valid_sum) === 0) {
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password;
         header("Location: dashboard.php");
@@ -103,5 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         });
     </script>
+
+    <!-- Copyright 2024 Jonathan Strontium, All Right Reserve. -->
 </body>
 </html>
